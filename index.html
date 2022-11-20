@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UT-8" />
+        <title>Flight Simulator</title>
+
+        <script id="vertex-shader" type="x-shader/x-vertex">
+            #version 300 es
+
+            in vec4 vPosition;
+            out float vtxPosition;
+
+            uniform mat4 modelViewMatrix, projectionMatrix;
+
+            void main()
+            {
+                gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+                vtxPosition = vPosition.y;
+            }
+        </script>
+
+        <script id="fragment-shader" type="x-shader/x-fragment">
+            #version 300 es
+            precision highp float;
+
+            in float vtxPosition;
+            out vec4 fragColor;
+
+            void main() {
+                if (vtxPosition < -200.0)
+                {
+                    fragColor = vec4(0.18039, 0.22353, 0.55686, 1.0);
+                }
+                else if (0.0 < vtxPosition && vtxPosition < 200.0)
+                {
+                    fragColor = vec4(0.14, 0.56, 0.31, 1.0);
+                }
+                else if (vtxPosition > 350.0)
+                {
+                    fragColor = vec4(1.0, 1.0, 1.0, 1.0);
+
+                }
+                else
+                {
+                    fragColor = vec4(0.24, 0.15, 0.08, 1.0);
+                }
+            }
+        </script>
+
+        <script src="http://interactivecomputergraphics.com/8E/Code%20update/Common/initShadersES6.js"></script>
+        <script src="http://interactivecomputergraphics.com/8E/Code%20update/Common/MVES6.js"></script>
+        <script type="text/javascript" src="perlin.js"></script>
+        <script type="text/javascript" src="app.js"></script>
+        <script type="text/javascript" src="eventhandler.js"></script>
+        <script type="text/javascript" src="MVES6.js"></script>
+    </head>
+
+    <body>
+        <canvas
+            id="gl-canvas"
+            width="512"
+            height="512"
+            style="border: 1px solid #000000;"
+        >
+            Oops ... your browser doesn't support the HTML5 canvas element
+        </canvas>
+        <div
+            style="
+                font-family: 'Times New Roman', Times, serif;
+                font-size: large;
+            "
+        >
+            <b>
+                <h1 style="text-align: left;">Flight Simulator</h1>
+            </b>
+            <p style="text-align: left;">Instructions:</p>
+            <p style="text-align: left;">
+                Shift + 1 to Vary Left<br />
+                Shift + 2 to Vary Right<br />
+                Shift + 3 to Vary Top<br />
+                Shift + 4 to Vary Bottom<br />
+                Shift + 5 to Vary Near<br />
+                Shift + 6 to Vary Far<br />
+                W to Pitch Up <br />
+                S to Pitch Down<br />
+                A to Yaw Left<br />
+                D to Yaw Right<br />
+                Q to Roll Left<br />
+                E to Roll Right<br />
+                Up key to Increase Speed<br />
+                Down to Decrease Speed <br />
+                C to Switch Shading<br />
+                Escape key to Quit
+            </p>
+        </div>
+    </body>
+</html>
